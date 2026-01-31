@@ -7,7 +7,7 @@ Reference for `/orchestrate` slash command. Maps SDD agents to Task tool teammat
 | Agent | subagent_type | Tier | Auto-detect trigger | Persistent? |
 |---|---|---|---|---|
 | context-manager | general-purpose | 1 | Always | Yes |
-| project-task-planner | general-purpose | 2 | `tasks.md` empty or missing | No |
+| project-task-planner | general-purpose | 2 | `{feature-path}/tasks.md` empty OR `.ops/build/v{x}/epic.md` changed (since last run) | No |
 | ui-designer | general-purpose | 3 | Tasks reference UI/screens/flows/components | No |
 | security-engineer | general-purpose | 3 | Tasks reference auth/secrets/tokens/credentials | No |
 | compliance-engineer | general-purpose | 3 | Tasks reference PHI/PII/HIPAA/data-retention | No |
@@ -41,7 +41,7 @@ T1: context-manager
 `auth`, `secret`, `token`, `credential`, `oauth`, `jwt`, `session`, `permission`, `rbac`, `acl`, `encryption`, `api key`, `password`, `mfa`, `2fa`
 
 ### Compliance agents (compliance-engineer → compliance-auditor)
-`phi`, `pii`, `hipaa`, `compliance`, `audit trail`, `data retention`, `baa`, `encryption at rest`, `de-identification`, `access log`, `consent`, `gdpr`
+`phi`, `pii`, `pipeda`, `phipaa`, `hipaa`, `compliance`, `audit trail`, `data retention`, `baa`, `encryption at rest`, `de-identification`, `access log`, `consent`, `gdpr`
 
 ### Database agent (database-administrator)
 `schema`, `migration`, `table`, `column`, `index`, `database`, `db`, `foreign key`, `sql`, `relation`, `constraint`, `seed`, `backfill`
@@ -53,7 +53,13 @@ When spawning a teammate via the `Task` tool, build the prompt as:
 ```
 You are the {agent-name}. {system-prompt-from-agents/<agent-name>.md}
 
-Feature workspace: {feature-path}
+Feature workspace: .ops/build/v{x}/{feature-name}  (aka `{feature-path}`)
+
+## Change Detection
+
+- Treat “`epic.md` changed” as: the content of `.ops/build/v{x}/epic.md` has changed since the last orchestration run for this build version (e.g., different hash/commit).
+- When `epic.md` changes, the orchestrator SHOULD (re)spawn `project-task-planner` for any feature whose `tasks.md` depends on affected epic items (or conservatively for all active features in `.ops/build/v{x}/`).
+
 
 Read the relevant artifacts in the feature workspace and perform your role.
 Write your outputs to the feature workspace as specified in your role definition.

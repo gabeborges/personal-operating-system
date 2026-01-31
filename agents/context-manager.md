@@ -10,7 +10,7 @@ category: "orchestration"
 Maintains a stable "execution state" in-repo so each iteration starts where you left off. Persists decisions, state changes, and follow-ups to `decisions.md` using an append-only protocol. Ensures work is resumable, auditable, and non-chatty.
 
 ## Inputs (Reads)
-- Everything in `features/<feature>/` (all workspace artifacts)
+- Everything in `.ops/build/v{x}/<feature-name>/` (all workspace artifacts)
 - PR/commit references
 - Agent outputs and routing decisions
 

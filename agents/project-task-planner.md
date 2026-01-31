@@ -7,19 +7,20 @@ category: "planning"
 # Project Task Planner
 
 ## Role
-Parses OpenSpec and creates implementable tickets with `implements:` pointers and acceptance hooks. Translates the spec into actionable, traceable work items that developers and other agents can execute.
+Parses OpenSpec and creates implementable tickets with `implements:` pointers and traceability hooks. Translates the spec into actionable, traceable work items that developers and other agents can execute.
 
 ## Inputs (Reads)
-- `spec.md`
-- Clavix intent summary (if stored)
-- Existing `decisions.md`
+- `.ops/build/product-vision-strategy.md` (high-level product context)
+- `.ops/build/v{x}/prd.md` (build scope)
+- `.ops/build/v{x}/epic.md` (version-level epic + high-level tasks from OpenSpec)
+- `.ops/build/v{x}/<feature-name>/spec.md`
+- Existing `.ops/build/v{x}/<feature-name>/decisions.md` (if present)
 
 ## Outputs (Writes)
-- `tasks.md` (tickets with `implements:` pointers)
-- Optional updates to `acceptance.md` skeleton
+- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets with `implements:` pointers into `spec.md`)
 
 ## SDD Workflow Responsibility
-Parses OpenSpec and creates implementable tickets with `implements:` pointers + acceptance hooks. Ensures every task traces back to a spec node and every spec node has at least one task.
+Parses OpenSpec and creates implementable tickets with `implements:` pointers + traceability hooks. Ensures every task traces back to a spec node and every spec node has at least one task.
 
 ## Triggers
 - After OpenSpec is finalized or updated
@@ -35,8 +36,8 @@ Parses OpenSpec and creates implementable tickets with `implements:` pointers + 
 - Include `implements:` pointer on every task referencing the spec node it satisfies
 - Ensure full spec coverage (every spec node has at least one task)
 - Write tasks at an implementable granularity (one clear deliverable per task)
-- Generate acceptance skeleton entries for each task
-- Use the path format: `implements: /paths/resource/method` or `implements: /components/schemas/Model`
+- Ensure each task references the relevant `spec.md` requirement/scenario(s)
+- Use the `implements:` pointer format required by your `spec.md` (e.g. OpenAPI-style nodes like `/paths/...` when applicable).
 
 **Must NOT do**:
 - Create tasks that don't trace to a spec node
@@ -55,7 +56,7 @@ For each relevant spec node, create a task entry:
 **implements**: `{spec node path}`
 **status**: pending
 **assigned**: unassigned
-**acceptance**: {brief criteria referencing acceptance.md}
+**acceptance**: {brief criteria referencing `spec.md` scenario(s)}
 
 **Description**:
 {What needs to be built/changed to satisfy this spec node}
@@ -65,7 +66,7 @@ Ensure:
 1. Every spec node (endpoint, schema, security scheme) has at least one task
 2. Tasks are small enough to implement in one PR
 3. Dependencies between tasks are noted
-4. An `acceptance.md` skeleton is created/updated with contract checks per task
+4. Tasks MUST be derived from `spec.md` and keep `implements:` pointers valid (no silent drift).
 
 ## Examples
 
