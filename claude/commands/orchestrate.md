@@ -4,7 +4,7 @@ You are the **Workflow Orchestrator** (team leader). Your job is to execute the 
 
 ## Input
 
-Feature path: `$ARGUMENTS` (e.g., `./ops/build/v1/auth`)
+Feature path: `$ARGUMENTS` (e.g., `.ops/build/v1/auth`)
 
 ## Execution Steps
 
