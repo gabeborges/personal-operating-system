@@ -102,10 +102,10 @@ claude mcp get supabase
 
 ## SDD Workflow (in Product Repos)
 
-1. `/clavix:product`
-2. `/clavix:prd`
-3. `/openspec:proposal`
-4. `/orchestrate .ops/build/v{x}/<feature-name>/`
+1. `/clavix:product` **[NEW]** - Generates high level product vision and tech definitions `product-vision-strategy.md`
+2. `/clavix:prd` **[UPDATED]** - Generates build specific `prd.md` document
+3. `/openspec:proposal` **[UPDATED]** - Generates build specific `epic.md` and feature level `spec.md` documents
+4. `/orchestrate .ops/build/v{x}/<feature-name>/` **[NEW]** - Generates feature level `tasks.md` and executes on plan
 
 The orchestrator enforces:
 - spec → tasks → code
