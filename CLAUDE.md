@@ -1,16 +1,6 @@
-# CLAUDE.md — Global + Project Guardrails (Merged)
+# Security, Identity, & Baseline Defaults
 
-This file merges:
-- **Global guardrails** (security, identity, baseline defaults)
-- **Project guardrails** (SDD + Next.js App Router + stack execution rules)
-
-Claude Code typically loads `CLAUDE.md` from the **repo root**, so this merged file avoids ambiguity and drift.
-
----
-
-# GLOBAL CLAUDE.md — Security, Identity, & Baseline Defaults
-
-This file defines **absolute guards** that must be followed for all Claude Code and agent operations across any repo or project.
+This defines **absolute guards** that must be followed for all Claude Code and agent operations across any repo or project.
 
 ---
 
@@ -79,9 +69,9 @@ END OF GLOBAL CLAUDE.md
 
 ---
 
-# PROJECT CLAUDE.md — Execution Guardrails (SDD + Next.js + Stack)
+# Execution Guardrails (SDD + Next.js + Stack)
 
-This file defines **project-specific execution constraints** for Claude Code and agent execution.
+This defines **project-specific execution constraints** for Claude Code and agent execution.
 
 Stack: Next.js (App Router), Tailwind, shadcn/ui, Headless UI, Supabase, Stripe, Google OAuth  
 Testing: Vitest + Playwright  
