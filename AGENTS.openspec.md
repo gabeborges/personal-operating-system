@@ -45,10 +45,11 @@ Agents MUST NOT reintroduce old terminology.
     └── v{x}/
         ├── prd.md
         ├── epic.md
+        ├── design.md 
+        ├── proposal.md
         └── <feature-name>/
-            ├── spec.md
-            └── design.md (optional)
-
+            └── spec.md
+            
 Any output that does not conform to this structure is invalid.
 
 ---
