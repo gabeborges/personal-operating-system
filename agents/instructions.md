@@ -26,7 +26,7 @@ The `/orchestrate <feature-path>` slash command executes the SDD build phase usi
 ### How it works
 
 1. **Entry**: `/orchestrate .ops/build/v1/<feature>` reads `spec.md` and `tasks.md` from the feature workspace, and uses build context from `../prd.md`, `../epic.md`, and `../../product-vision-strategy.md`
-2. **Auto-detection**: Task and spec content is scanned for keywords to determine which optional agents to spawn (see `agents/swarm-config.md` for the full keyword table)
+2. **Auto-detection**: Task and spec content is scanned for keywords to determine which optional agents to spawn (see `.claude/agents/swarm-config.md` for the full keyword table)
 3. **Task creation**: Each ticket in `tasks.md` becomes a `TaskCreate` entry with `implements:` pointers preserved and `addBlockedBy` set per the tier DAG
 4. **Tier-based spawning**: Agents spawn via the `Task` tool as `general-purpose` subagents, tier by tier:
    - T1: context-manager (always) → T2: project-task-planner (if needed) → T3: ui-designer, security-engineer, compliance-engineer (if detected, parallel) → T4: frontend-designer, database-administrator (if detected, parallel) → T5: fullstack-developer, test-automator (parallel) → T6: qa, code-reviewer, security-auditor, compliance-auditor, debugger (parallel)
@@ -35,7 +35,7 @@ The `/orchestrate <feature-path>` slash command executes the SDD build phase usi
 
 ### Agent-to-teammate mapping
 
-Each agent's system prompt is read from `agents/<agent-name>.md` and combined with the feature workspace path to form the teammate's prompt. See `agents/swarm-config.md` for the full roster, tiers, and auto-detection triggers.
+Each agent's system prompt is read from `.claude/agents/<agent-name>.md` and combined with the feature workspace path to form the teammate's prompt. See `.claude/agents/swarm-config.md` for the full roster, tiers, and auto-detection triggers.
 
 ### Message protocol
 

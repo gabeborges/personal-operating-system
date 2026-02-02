@@ -47,14 +47,14 @@ If files conflict, **AGENTS.md wins**.
 ---
 
 ### 3. Agent Swarm (Required)
-Copy to product repo root:
+Copy to .claude folder:
 ```
-agents/
+.claude/agents/
 ```
 
 Must include (do not rename):
-- `agents/instructions.md`
-- `agents/swarm-config.md`
+- `.claude/agents/instructions.md`
+- `.claude/agents/swarm-config.md`
 
 Defines agent roles, tiers, and orchestration rules.
 

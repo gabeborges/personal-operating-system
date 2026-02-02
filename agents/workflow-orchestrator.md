@@ -88,7 +88,7 @@ When invoked via `/orchestrate <feature-path>`, you act as the **team leader** u
 ### Spawning Teammates
 
 Spawn each agent via the `Task` tool with `subagent_type: "general-purpose"`. Build the prompt from:
-1. The agent's system prompt (`agents/<agent-name>.md`)
+1. The agent's system prompt (`.claude/agents/<agent-name>.md`)
 2. The feature workspace path
 3. Instructions to read artifacts, perform the role, and return a summary
 
@@ -113,4 +113,4 @@ If any teammate creates `spec-change-requests.md`:
 
 ### Auto-Detection
 
-Scan `.ops/build/v{x}/<feature-name>/tasks.md` and `.ops/build/v{x}/<feature-name>/spec.md` content for keywords to determine which optional agents to spawn. See `agents/swarm-config.md` for the complete keyword table and agent roster.
+Scan `.ops/build/v{x}/<feature-name>/tasks.md` and `.ops/build/v{x}/<feature-name>/spec.md` content for keywords to determine which optional agents to spawn. See `.claude/agents/swarm-config.md` for the complete keyword table and agent roster.

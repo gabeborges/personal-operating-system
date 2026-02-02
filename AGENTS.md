@@ -167,21 +167,21 @@ This section regulates agent collaboration: roster, tiers, and when to invoke wh
 
 | Agent | Role | Category | File |
 |-------|------|----------|------|
-| Workflow Orchestrator | Orchestration + routing | orchestration | [agents/workflow-orchestrator.md](agents/workflow-orchestrator.md) |
-| Context Manager | Memory + decision log | orchestration | [agents/context-manager.md](agents/context-manager.md) |
-| Project Task Planner | Spec handoff / ticket writer | planning | [agents/project-task-planner.md](agents/project-task-planner.md) |
-| UI Designer | UX intent + flows | design | [agents/ui-designer.md](agents/ui-designer.md) |
-| Frontend Designer | Design→implementation translator | design | [agents/frontend-designer.md](agents/frontend-designer.md) |
-| Fullstack Developer | Primary builder | implementation | [agents/fullstack-developer.md](agents/fullstack-developer.md) |
-| Database Administrator | Migration strategist / safety gate | implementation | [agents/database-administrator.md](agents/database-administrator.md) |
-| QA | Contract validation + exploratory | quality | [agents/qa.md](agents/qa.md) |
-| Test Automator | Automated test implementer | quality | [agents/test-automator.md](agents/test-automator.md) |
-| Debugger | Root-cause investigator | quality | [agents/debugger.md](agents/debugger.md) |
-| Code Reviewer | Quality gate | quality | [agents/code-reviewer.md](agents/code-reviewer.md) |
-| Security Engineer | Secure-by-design implementer | security | [agents/security-engineer.md](agents/security-engineer.md) |
-| Security Auditor | Independent security reviewer | security | [agents/security-auditor.md](agents/security-auditor.md) |
-| Compliance Engineer | Compliance-by-design | compliance | [agents/compliance-engineer.md](agents/compliance-engineer.md) |
-| Compliance Auditor | Compliance reviewer | compliance | [agents/compliance-auditor.md](agents/compliance-auditor.md) |
+| Workflow Orchestrator | Orchestration + routing | orchestration | [.claude/agents/workflow-orchestrator.md](.claude/agents/workflow-orchestrator.md) |
+| Context Manager | Memory + decision log | orchestration | [.claude/agents/context-manager.md](.claude/agents/context-manager.md) |
+| Project Task Planner | Spec handoff / ticket writer | planning | [.claude/agents/project-task-planner.md](.claude/agents/project-task-planner.md) |
+| UI Designer | UX intent + flows | design | [.claude/agents/ui-designer.md](.claude/agents/ui-designer.md) |
+| Frontend Designer | Design→implementation translator | design | [.claude/agents/frontend-designer.md](.claude/agents/frontend-designer.md) |
+| Fullstack Developer | Primary builder | implementation | [.claude/agents/fullstack-developer.md](.claude/agents/fullstack-developer.md) |
+| Database Administrator | Migration strategist / safety gate | implementation | [.claude/agents/database-administrator.md](.claude/agents/database-administrator.md) |
+| QA | Contract validation + exploratory | quality | [.claude/agents/qa.md](.claude/agents/qa.md) |
+| Test Automator | Automated test implementer | quality | [.claude/agents/test-automator.md](.claude/agents/test-automator.md) |
+| Debugger | Root-cause investigator | quality | [.claude/agents/debugger.md](.claude/agents/debugger.md) |
+| Code Reviewer | Quality gate | quality | [.claude/agents/code-reviewer.md](.claude/agents/code-reviewer.md) |
+| Security Engineer | Secure-by-design implementer | security | [.claude/agents/security-engineer.md](.claude/agents/security-engineer.md) |
+| Security Auditor | Independent security reviewer | security | [.claude/agents/security-auditor.md](.claude/agents/security-auditor.md) |
+| Compliance Engineer | Compliance-by-design | compliance | [.claude/agents/compliance-engineer.md](.claude/agents/compliance-engineer.md) |
+| Compliance Auditor | Compliance reviewer | compliance | [.claude/agents/compliance-auditor.md](.claude/agents/compliance-auditor.md) |
 
 ## By Category
 
@@ -255,10 +255,10 @@ Feature workspace path convention:
 - `.ops/build/v{x}/<feature-name>/` (aka `{feature-path}`)
 
 The workflow-orchestrator spawns agents tier-by-tier and auto-detects which optional agents are needed from `tasks.md` / `spec.md` content.
-See [agents/swarm-config.md](agents/swarm-config.md) for the agent↔teammate mapping and keyword triggers.
+See [.claude/agents/swarm-config.md](.claude/agents/swarm-config.md) for the agent↔teammate mapping and keyword triggers.
 
 ## Supporting References
 
-- Agent roles, inputs, outputs: [agents/instructions.md](agents/instructions.md)
+- Agent roles, inputs, outputs: [.claude/agents/instructions.md](.claude/agents/instructions.md)
 - Agent template format: [agentsmd/agents.md](https://github.com/agentsmd/agents.md)
-- Swarm orchestration config: [agents/swarm-config.md](agents/swarm-config.md)
+- Swarm orchestration config: [.claude/agents/swarm-config.md](.claude/agents/swarm-config.md)

@@ -36,7 +36,7 @@ For each ticket in `$ARGUMENTS/tasks.md`:
 ### 4. Spawn Teammates Tier-by-Tier
 
 Use the `Task` tool to spawn each agent as a `general-purpose` subagent. Build each teammate's prompt from:
-1. The agent's system prompt in `agents/<agent-name>.md`
+1. The agent's system prompt in `.claude/agents/<agent-name>.md`
 2. The feature workspace path: `$ARGUMENTS`
 3. Instructions to read relevant artifacts and write outputs to the feature workspace
 4. Instruction to report completion back: "When done, summarize your output and findings."
