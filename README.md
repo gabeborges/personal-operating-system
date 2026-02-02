@@ -21,9 +21,10 @@ You copy/install parts of this repo into each product repo.
 Copy into the product repo:
 ```
 .claude/commands/
-├── clavix/          # product.md, prd.md
-├── openspec/        # proposal.md
-└── orchestrate.md   # swarm entrypoint
+├── clavix/             # product.md, prd.md
+├── openspec/           # proposal.md
+├── interface-design/   # init.md, status.md, extract.md, audit.md
+└── orchestrate         # swarm entrypoint
 ```
 
 Commands:
@@ -32,6 +33,23 @@ Commands:
 - `/openspec:proposal` → `.ops/build/v{x}/epic.md`
 - `/orchestrate` → agent swarm implementation
 - `/openspec:apply` → deprecated
+
+- `/interface-design:init` → initialize `.ops/ui-design-system.md`
+- `/interface-design:status` → report current UI design system state
+- `/interface-design:extract` → extract/update `.ops/ui-design-system.md` from existing UI
+- `/interface-design:audit <path>` → audit UI code against `.ops/ui-design-system.md`
+
+### 1.1 Claude Skills
+Copy into the product repo:
+```
+.claude/skills/
+├── interface-design/    # SKILL.md + references/ (for complex design systems and pages)
+└── frontend-design/     # SKILL.md (for one-off / simple pages)
+```
+
+Notes:
+- If `.ops/ui-design-system.md` exists, UI changes MUST comply with it.
+- For simple one-off pages/components (no system work), use the `frontend-design` skill.
 
 ---
 
@@ -105,7 +123,8 @@ claude mcp get supabase
 1. `/clavix:product` **[NEW]** - Generates high level product vision and tech definitions `product-vision-strategy.md`
 2. `/clavix:prd` **[UPDATED]** - Generates build specific `prd.md` document
 3. `/openspec:proposal` **[UPDATED]** - Generates build specific `epic.md` and feature level `spec.md` documents
-4. `/orchestrate .ops/build/v{x}/<feature-name>/` **[NEW]** - Generates feature level `tasks.md` and executes on plan
+4. `/interface-design:init` **[OPTIONAL]** - Generates ui system design for the project (use frontend-design skill for simple pages)
+5. `/orchestrate .ops/build/v{x}/<feature-name>/` **[NEW]** - Generates feature level `tasks.md` and executes on plan
 
 The orchestrator enforces:
 - spec → tasks → code

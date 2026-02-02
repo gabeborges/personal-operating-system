@@ -29,6 +29,10 @@ Agents MUST use these artifacts in this priority order:
    - Feature tickets derived from `spec.md`.
    - Each ticket MUST include `implements:` pointers into `spec.md`.
 
+6. `.ops/ui-design-system.md` (when UI exists)
+   - Project-level UI design system + rules (generated/maintained via `interface-design` commands).
+   - If present, it is the UI source of truth for layout, typography, spacing, components, and styling.
+
 ### Strict definitions (do not drift)
 - `epic.md` = version-level plan in `.ops/build/v{x}/epic.md`
 - `tasks.md` = feature-level tickets in `.ops/build/v{x}/<feature-name>/tasks.md`
@@ -40,6 +44,7 @@ Agents MUST use these artifacts in this priority order:
 .ops/
 └── build/
     ├── product-vision-strategy.md
+    ├── ui-design-system.md (optional)
     └── v{x}/
         ├── prd.md
         ├── epic.md
@@ -230,6 +235,8 @@ Tier 5: fullstack-developer, test-automator
 Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor
 ```
 
+
+
 ## Agent Selection Guide
 
 | Situation | Agent to invoke |
@@ -247,6 +254,12 @@ Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor
 | Need to record a decision | context-manager |
 | Spec can't be implemented as-is | workflow-orchestrator (creates spec-change-request) |
 
+
+**UI system rule:**
+- Before any UI work, check for `.ops/ui-design-system.md`.
+- If missing, run `/interface-design:init` (or have the orchestrator do it).
+- If present, `ui-designer` and `frontend-designer` MUST follow it.
+- Use `frontend-design` skill for simple one-off pages/components when no system updates are needed.
 ## Swarm Orchestration
 
 Use `/orchestrate <feature-path>` to run the full SDD build phase automatically.

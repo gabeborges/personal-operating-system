@@ -56,7 +56,7 @@ This defines **absolute guards** that must be followed for all Claude Code and a
 
 ### Fault Reporting
 - If illegal/sensitive output is generated, stop and log the occurrence into:
-  - `audit/clause/security_incidents.log`
+  - `.ops/audit/clause/security_incidents.log`
 
 ---
 
@@ -132,6 +132,10 @@ Before writing or changing code, you MUST read:
 - Use Headless UI for accessible primitives.
 
 Do not add new UI libs without explicit approval or task references.
+
+- If `.ops/ui-design-system.md` exists, UI work MUST comply with it.
+- If UI work is needed and the system file is missing, run `/interface-design:init` before designing/implementing UI.
+- For simple one-off pages/components where a project-wide system is not needed, prefer the `frontend-design` skill.
 
 ---
 

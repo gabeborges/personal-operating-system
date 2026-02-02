@@ -23,6 +23,12 @@ Scan task content and spec for keywords to determine which optional agents to sp
 | `phi`, `pii`, `hipaa`, `compliance`, `audit trail`, `data retention`, `baa`, `encryption at rest` | compliance-engineer (T3), compliance-auditor (T6) |
 | `schema`, `migration`, `table`, `column`, `index`, `database`, `db`, `foreign key`, `sql` | database-administrator (T4) |
 
+
+**UI system pre-step (when UI is detected):**
+- Check for `.ops/ui-design-system.md`.
+- If missing, run `/interface-design:init` before `ui-designer` starts.
+- If present, `ui-designer` and `frontend-designer` MUST follow it.
+- For simple one-off pages/components (no system work), prefer the `frontend-design` skill.
 **Always spawn**: context-manager (T1), fullstack-developer (T5), test-automator (T5), qa (T6), code-reviewer (T6).
 
 ### 3. Create Tasks
