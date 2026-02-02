@@ -9,7 +9,7 @@ Show current design system state.
 
 ## What to Show
 
-**If `..ops/ui-design-system.md` exists:**
+**If `.ops/ui-design-system.md` exists:**
 
 Display:
 ```

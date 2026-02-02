@@ -287,7 +287,7 @@ When you finish building something, **always offer to save**:
 "Want me to save these patterns for future sessions?"
 ```
 
-If yes, write to `.interface-design/system.md`:
+If yes, write to `.ops/ui-design-system.md`:
 - Direction and feel
 - Depth strategy (borders/shadows/layered)
 - Spacing base unit

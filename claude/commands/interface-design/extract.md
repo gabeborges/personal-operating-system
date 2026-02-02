@@ -67,11 +67,11 @@ Patterns:
   Button: 36px h, 12px 16px pad, 6px radius
   Card: 1px border, 16px pad
 
-Create .interface-design/system.md with these? (y/n/customize)
+Create .ops/ui-design-system.md with these? (y/n/customize)
 ```
 
 ## Implementation
-
+   
 1. Glob for UI files
 2. Parse for repeated values
 3. Identify common patterns
