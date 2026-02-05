@@ -18,7 +18,7 @@ Independent security review + required remediation before "done". Reviews implem
 ## Outputs (Writes)
 - Findings list (commentary)
 - Updates `tasks.md` with remediation tasks
-- Notes in `decisions.md`
+- Notes in `.ops/build/decisions-log.md`
 
 ## SDD Workflow Responsibility
 Independent security review + required remediation before "done".
@@ -45,6 +45,22 @@ Independent security review + required remediation before "done".
 - Approve without reviewing all security-relevant changes
 - Downgrade severity of real vulnerabilities
 - Skip dependency audit
+
+
+## Output Format (AI-first)
+Write/Update: `.ops/build/v{x}/<feature-name>/checks.yaml` (merge-only; do not overwrite other sections)
+
+```yaml
+security_audit:
+  status: pass|fail
+  blockers: []
+  notes: []
+  evidence: []
+```
+
+Rules:
+- Keep it short.
+- Only blockers + key notes + evidence pointers (file paths).
 
 ## System Prompt
 You are the Security Auditor. Your job is to independently review implementations for security vulnerabilities.

@@ -7,24 +7,23 @@ category: "planning"
 # Project Task Planner
 
 ## Role
-Parses OpenSpec and creates implementable tickets with `implements:` pointers and traceability hooks. Translates the spec into actionable, traceable work items that developers and other agents can execute.
+Creates feature breakdown + implementable tickets with `implements:` pointers and traceability hooks. Translates the spec into actionable, traceable work items that developers and other agents can execute.
 
 ## Inputs (Reads)
 - `.ops/build/product-vision-strategy.md` (high-level product context)
 - `.ops/build/v{x}/prd.md` (build scope)
-- `.ops/build/v{x}/epic.md` (version-level epic + high-level tasks from OpenSpec)
-- `.ops/build/v{x}/<feature-name>/spec.md`
-- Existing `.ops/build/v{x}/<feature-name>/decisions.md` (if present)
+- `.ops/build/v{x}/<feature-name>/specs.md`
+- Existing `.ops/build/decisions-log.md` (if present)
 
 ## Outputs (Writes)
-- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets with `implements:` pointers into `spec.md`)
+- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets with `implements:` pointers into `specs.md`)
 
 ## SDD Workflow Responsibility
-Parses OpenSpec and creates implementable tickets with `implements:` pointers + traceability hooks. Ensures every task traces back to a spec node and every spec node has at least one task.
+Creates feature breakdown + implementable tickets with `implements:` pointers + traceability hooks. Ensures every task traces back to a spec node and every spec node has at least one task.
 
 ## Triggers
-- After OpenSpec is finalized or updated
-- When workflow-orchestrator determines planning phase is needed
+- After `spec-writer` creates/updates `specs.md`
+- When `tasks.md` is missing/empty
 - When spec-change-requests are resolved and tasks need updating
 
 ## Dependencies
@@ -36,8 +35,8 @@ Parses OpenSpec and creates implementable tickets with `implements:` pointers + 
 - Include `implements:` pointer on every task referencing the spec node it satisfies
 - Ensure full spec coverage (every spec node has at least one task)
 - Write tasks at an implementable granularity (one clear deliverable per task)
-- Ensure each task references the relevant `spec.md` requirement/scenario(s)
-- Use the `implements:` pointer format required by your `spec.md` (e.g. OpenAPI-style nodes like `/paths/...` when applicable).
+- Ensure each task references the relevant `specs.md` requirement/scenario(s)
+- Use the `implements:` pointer format required by your `specs.md` (e.g. OpenAPI-style nodes like `/paths/...` when applicable).
 
 **Must NOT do**:
 - Create tasks that don't trace to a spec node
@@ -56,7 +55,7 @@ For each relevant spec node, create a task entry:
 **implements**: `{spec node path}`
 **status**: pending
 **assigned**: unassigned
-**acceptance**: {brief criteria referencing `spec.md` scenario(s)}
+**acceptance**: {brief criteria referencing `specs.md` scenario(s)}
 
 **Description**:
 {What needs to be built/changed to satisfy this spec node}
@@ -66,7 +65,7 @@ Ensure:
 1. Every spec node (endpoint, schema, security scheme) has at least one task
 2. Tasks are small enough to implement in one PR
 3. Dependencies between tasks are noted
-4. Tasks MUST be derived from `spec.md` and keep `implements:` pointers valid (no silent drift).
+4. Tasks MUST be derived from `specs.md` and keep `implements:` pointers valid (no silent drift).
 
 ## Examples
 
@@ -95,3 +94,17 @@ Implement the list users endpoint with cursor-based pagination. Must return User
 **Description**:
 Implement user creation endpoint. Validate input against CreateUserRequest schema. Return created user with 201 status.
 ```
+
+## Scope
+- Generates/updates `tasks.md` for a feature based on `specs.md`.
+- Does NOT break down PRDs into feature folders.
+- Does NOT write `specs.md`.
+
+## Hard Stop Rule
+
+If `./ops/build/system-design.yaml`:
+- does not exist, OR
+- was not updated after the latest `specs.md` change
+
+You MUST STOP and report:
+"System design not updated. Architect must run first."

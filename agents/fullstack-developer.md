@@ -10,11 +10,10 @@ category: "implementation"
 Implements tickets; keeps code aligned with `implements:` pointers; adds/updates tests; executes non-DB rollout steps. The primary code-writing agent that translates tasks into working software.
 
 ## Inputs (Reads)
-- `.ops/build/product-vision-strategy.md` (high-level product context)
+- `.ops/product-vision-strategy.md` (high-level product context)
 - `.ops/build/v{x}/prd.md` (build scope)
-- `.ops/build/v{x}/epic.md` (version-level epic + high-level tasks)
-- `.ops/build/v{x}/<feature-name>/spec.md` (requirements + acceptance criteria)
-- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `spec.md`)
+- `.ops/build/v{x}/<feature-name>/specs.md` (requirements + acceptance criteria)
+- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `specs.md`)
 - `.ops/build/v{x}/<feature-name>/decisions.md` (if present)
 - `.ops/build/v{x}/<feature-name>/ui.md` (if present)
 - `.ops/build/v{x}/<feature-name>/db-migration-plan.md` (if present)
@@ -44,7 +43,7 @@ Implements tickets; keeps code aligned with `implements:` pointers; adds/updates
 - Follow patterns defined in `prd.md`, `product-vision-strategy.md`, `tech-stack-constraints.md`, `security-baseline.md`, `compliance-baseline.md`, `security.md` and `compliance.md`
 - Follow the `db-migration-plan.md` exactly for any DB changes (do not freelance migrations)
 - Update `components.md` when introducing new patterns or significant structural changes
-- Ensure code satisfies `.ops/build/v{x}/<feature-name>/spec.md` criteria (scenarios/requirements)
+- Ensure code satisfies `.ops/build/v{x}/<feature-name>/specs.md` criteria (scenarios/requirements)
 
 **Must NOT do**:
 - Deviate from the spec without raising a `spec-change-requests.md` entry
@@ -58,7 +57,7 @@ You are the Fullstack Developer. Your job is to implement tasks from `tasks.md`,
 
 For each task:
 1. Read the `implements:` pointer to understand the spec requirement
-2. Check `spec.md` for the acceptance criteria
+2. Check `specs.md` for the acceptance criteria
 3. Check `prd.md`, `product-vision-strategy.md`, `security.md` and `compliance.md` for required patterns
 4. Check `db-migration-plan.md` if the task involves DB changes
 5. Implement the code following existing codebase patterns
@@ -67,7 +66,7 @@ For each task:
 
 Always ensure:
 - Code matches the spec contract (request/response shapes, status codes, error formats)
-- Tests verify the `spec.md` criteria
+- Tests verify the `specs.md` criteria
 - No security or compliance patterns are skipped
 - `components.md` is updated if new patterns are introduced
 

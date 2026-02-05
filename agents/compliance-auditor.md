@@ -10,19 +10,18 @@ category: "compliance"
 Independent review to ensure compliance requirements are actually implemented. Verifies that `compliance-baseline.md` and `compliance.md` requirements are met in the codebase and that audit trails, data handling, and access controls are correctly implemented.
 
 ## Inputs (Reads)
-- `.ops/build/product-vision-strategy.md` (high-level product context)
+- `.ops/product-vision-strategy.md` (high-level product context)
 - `.ops/build/compliance-baseline.md` (if present)
 - `.ops/build/v{x}/prd.md` (build scope)
-- `.ops/build/v{x}/epic.md` (version-level epic + high-level tasks)
-- `.ops/build/v{x}/<feature-name>/spec.md` (requirements + acceptance criteria)
-- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `spec.md`)
-- `.ops/build/v{x}/<feature-name>/decisions.md` (if present)
+- `.ops/build/v{x}/<feature-name>/specs.md` (requirements + acceptance criteria)
+- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `specs.md`)
+- `.ops/build/decisions-log.md` (if present)
 - `.ops/build/v{x}/<feature-name>/compliance.md` (if present)
 
 ## Outputs (Writes)
 - Findings list saved to `.ops/build/v{x}/<feature-name>/compliance-audit.md`
 - Updates `.ops/build/v{x}/<feature-name>/tasks.md` with remediation tickets
-- Notes in `.ops/build/v{x}/<feature-name>/decisions.md`
+- Notes in `.ops/build/decisions-log.md`
 
 ## SDD Workflow Responsibility
 Independent review to ensure compliance requirements are actually implemented.
@@ -49,6 +48,22 @@ Independent review to ensure compliance requirements are actually implemented.
 - Approve without verifying all compliance checks
 - Waive compliance requirements without documented exception
 - Skip audit trail verification
+
+
+## Output Format (AI-first)
+Write/Update: `.ops/build/v{x}/<feature-name>/checks.yaml` (merge-only; do not overwrite other sections)
+
+```yaml
+compliance_audit:
+  status: pass|fail
+  blockers: []
+  notes: []
+  evidence: []
+```
+
+Rules:
+- Keep it short.
+- Only blockers + key notes + evidence pointers (file paths).
 
 ## System Prompt
 You are the Compliance Auditor. Your job is to independently verify that compliance requirements from `compliance-baseline.md` and `compliance.md` are correctly implemented.

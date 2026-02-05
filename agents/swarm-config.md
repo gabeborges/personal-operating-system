@@ -7,7 +7,8 @@ Reference for `/orchestrate` slash command. Maps SDD agents to Task tool teammat
 | Agent | subagent_type | Tier | Auto-detect trigger | Persistent? |
 |---|---|---|---|---|
 | context-manager | general-purpose | 1 | Always | Yes |
-| project-task-planner | general-purpose | 2 | `{feature-path}/tasks.md` empty OR `.ops/build/v{x}/epic.md` changed (since last run) | No |
+| spec-writer | general-purpose | 2 | `{feature-path}/specs.md` missing OR empty OR `{feature-path}/spec-change-requests.md` exists | No |
+| project-task-planner | general-purpose | 3 | `{feature-path}/tasks.md` missing OR empty OR `{feature-path}/specs.md` changed (since last run) | No |
 | ui-designer | general-purpose | 3 | Tasks reference UI/screens/flows/components | No |
 | security-engineer | general-purpose | 3 | Tasks reference auth/secrets/tokens/credentials | No |
 | compliance-engineer | general-purpose | 3 | Tasks reference PHI/PII/HIPAA/data-retention | No |
@@ -25,11 +26,12 @@ Reference for `/orchestrate` slash command. Maps SDD agents to Task tool teammat
 
 ```
 T1: context-manager
- └→ T2: project-task-planner (conditional)
-     └→ T3: ui-designer | security-engineer | compliance-engineer (parallel, conditional)
-         └→ T4: frontend-designer | database-administrator (parallel, conditional)
-             └→ T5: fullstack-developer | test-automator (parallel)
-                 └→ T6: qa | code-reviewer | security-auditor | compliance-auditor | debugger (parallel)
+ └→ T2: spec-writer (conditional)
+     └→ T3: project-task-planner (conditional)
+         └→ T4: ui-designer | security-engineer | compliance-engineer (parallel, conditional)
+             └→ T5: frontend-designer | database-administrator (parallel, conditional)
+                 └→ T6: fullstack-developer | test-automator (parallel)
+                     └→ T7: qa | code-reviewer | security-auditor | compliance-auditor | debugger (parallel)
 ```
 
 ## Auto-Detection Keywords
@@ -57,9 +59,6 @@ Feature workspace: .ops/build/v{x}/{feature-name}  (aka `{feature-path}`)
 
 ## Change Detection
 
-- Treat “`epic.md` changed” as: the content of `.ops/build/v{x}/epic.md` has changed since the last orchestration run for this build version (e.g., different hash/commit).
-- When `epic.md` changes, the orchestrator SHOULD (re)spawn `project-task-planner` for any feature whose `tasks.md` depends on affected epic items (or conservatively for all active features in `.ops/build/v{x}/`).
-
 
 Read the relevant artifacts in the feature workspace and perform your role.
 Write your outputs to the feature workspace as specified in your role definition.
@@ -71,4 +70,20 @@ When complete, summarize what you did and any findings or blockers.
 - Teammates report completion by returning their summary to the orchestrator
 - If a teammate identifies a spec violation, it must create `{feature-path}/spec-change-requests.md`
 - The orchestrator halts on any spec-change-request and notifies the user
-- Context-manager appends all decisions and state changes to `{feature-path}/decisions.md`
+- Context-manager appends all decisions and state changes to `.ops/build/decisions-log.md`
+## Knowledge Synthesizer
+Trigger (deviation only):
+- If an agent reports: deviation | scope change | spec break | changed plan | trade-off | constraint
+Route:
+- Run: knowledge-synthesizer
+
+
+## Architect
+Trigger:
+- After `spec-writer` completes for a build version
+- Or when user asks: system design | architecture
+Route:
+- Run: architect
+Artifacts:
+- Writes `./ops/build/system-design.yaml`
+- May add `spec_change_requests` to trigger `spec-writer` reruns

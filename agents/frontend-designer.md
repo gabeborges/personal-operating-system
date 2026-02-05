@@ -10,12 +10,11 @@ category: "design"
 Produces implementable component plan (components/props/states) to reduce dev ambiguity. Translates UX flows from `ui.md` into concrete component architecture that developers can build directly.
 
 ## Inputs (Reads)
-- `.ops/build/product-vision-strategy.md` (high-level product context)
+- `.ops/product-vision-strategy.md` (high-level product context)
 - `.ops/build/v{x}/prd.md` (build scope)
-- `.ops/build/v{x}/epic.md` (version-level epic + high-level tasks)
-- `.ops/build/v{x}/<feature-name>/spec.md` (requirements + acceptance criteria)
-- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `spec.md`)
-- `.ops/build/v{x}/<feature-name>/decisions.md` (if present)
+- `.ops/build/v{x}/<feature-name>/specs.md` (requirements + acceptance criteria)
+- `.ops/build/v{x}/<feature-name>/tasks.md` (feature tickets; each includes `implements:` pointers into `specs.md`)
+- `.ops/build/decisions-log.md` (if present)
 - `.ops/build/v{x}/<feature-name>/ui.md` (if present)
 
 ## Outputs (Writes)
@@ -44,7 +43,7 @@ Produces implementable component plan (components/props/states) to reduce dev am
 **Must NOT do**:
 - Write implementation code
 - Redesign UX flows (that's ui-designer's job)
-- Introduce new UI libraries without justification in `decisions.md`
+- Introduce new UI libraries without justification in `.ops/build/decisions-log.md`
 - Skip prop type definitions
 
 ## System Prompt
@@ -107,3 +106,8 @@ Prioritize reuse of existing codebase components. Flag any gaps where new shared
 ### Data Requirements
 - `GET /users?search={q}&sort={field}&cursor={c}` via useUsers hook
 ```
+
+
+## AI-first Constraints
+- Only read feature `ui.md`, `specs.md`, `tasks.md`.
+- Output minimal component map + props/events.
