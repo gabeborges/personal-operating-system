@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add:*)",
+      "Bash(python3 -c \" import sys, json for line in sys.stdin: try: obj = json.loads\\(line.strip\\(\\)\\) if obj.get\\(''type''\\) == ''assistant'': msg = obj.get\\(''message'', {}\\) content = msg.get\\(''content'', ''''\\) if isinstance\\(content, list\\): for block in content: if isinstance\\(block, dict\\) and block.get\\(''type''\\) == ''text'': print\\(block[''text''][:3000]\\) elif isinstance\\(content, str\\): print\\(content[:3000]\\) except: pass \")",
+      "Bash(ls:*)",
+      "Bash(test:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase",
+    "sentry",
+    "stripe",
+    "context7",
+    "playwright",
+    "github"
+  ]
+}
