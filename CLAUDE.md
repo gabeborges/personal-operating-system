@@ -112,6 +112,7 @@ npm run build
 
 ## SDD Artifact Flow
 - Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) → `db-migration-plan.yaml` (build-level, conditional) → `tasks.yaml` (per feature) → `build-order.yaml` (cross-feature, conditional)
+- Do not create `specs.md` until `prd.md` exists for that build version
 - Do not create `tasks.yaml` until `system-design.yaml` exists
 - Do not create `db-migration-plan.yaml` until `system-design.yaml` exists — one consolidated plan per build version at `.ops/build/v{x}/db-migration-plan.yaml`
 - Do not create `build-order.yaml` until all feature `tasks.yaml` files exist for the build version

@@ -76,12 +76,13 @@ Build version: v{x} — all work must stay within this version. Do not mix build
 ## Context
 
 Read the following artifacts before starting:
-1. .ops/build/v{x}/prd.md — version scope and acceptance intent
-2. {feature-path}/specs.md — feature requirements
-3. .ops/build/system-design.yaml — architecture reference
-4. {feature-path}/tasks.yaml — feature tickets (if present)
-5. .ops/build/v{x}/db-migration-plan.yaml — DB migration plan (build-level, if DB changes involved)
-6. .ops/build/v{x}/build-order.yaml — cross-feature build order (build-level, if multi-feature build)
+1. claude/autonomy-policy.md — escalation ladder and decision tree for when to act vs ask
+2. .ops/build/v{x}/prd.md — version scope and acceptance intent
+3. {feature-path}/specs.md — feature requirements
+4. .ops/build/system-design.yaml — architecture reference
+5. {feature-path}/tasks.yaml — feature tickets (if present)
+6. .ops/build/v{x}/db-migration-plan.yaml — DB migration plan (build-level, if DB changes involved)
+7. .ops/build/v{x}/build-order.yaml — cross-feature build order (build-level, if multi-feature build)
 
 Perform your role using these artifacts.
 Write your outputs to the feature workspace as specified in your role definition.

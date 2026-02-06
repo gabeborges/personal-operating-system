@@ -9,7 +9,7 @@ Answer in order. First YES wins.
 | Question | Answer | Action |
 |----------|--------|--------|
 | Does it modify external/shared systems (production, remote repo, webhooks, third-party APIs)? | YES | **Ask** |
-| Is it a destructive force operation (`--force`, `--hard`, `-rf /`, `chmod 777`)? | YES | **Ask** |
+| Is it a destructive force operation (`--force`, `--hard`, `rm -rf`, `chmod 777`)? | YES | **Ask** |
 | Does it conflict with specs or security rules (CLAUDE.md § Security)? | YES | **Stop** and escalate |
 | Does it modify `.env` files or environment variables? | YES | **Ask** |
 | Is it within project directory AND routine dev operation (file CRUD, deps, tests, builds, local commits, branches)? | YES | **Act** |

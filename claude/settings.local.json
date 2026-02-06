@@ -71,14 +71,20 @@
       "Bash(git clean -f *)",
       "Bash(git clean -fd *)",
       "Bash(git branch -D *)",
+      "Bash(git branch -d *)",
       "Bash(git checkout -f *)",
+      "Bash(git checkout . *)",
+      "Bash(git checkout -- . *)",
       "Bash(git stash drop *)",
       "Bash(git stash clear *)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf .*)",
       "Bash(rm -rf .git*)",
       "Bash(chmod 777 *)",
-      "Bash(> .env*)"
+      "Bash(> .env*)",
+      "Bash(echo * >> .env*)",
+      "Bash(echo * > .env*)",
+      "Bash(sed * .env*)"
     ]
   },
   "enableAllProjectMcpServers": true,
