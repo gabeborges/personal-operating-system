@@ -10,7 +10,10 @@ Agents MUST consult these artifacts before coding:
 
 | Priority | Artifact | Path | Purpose |
 |----------|----------|------|---------|
-| 1 | Product Vision | `.ops/product-vision-strategy.md` | High-level product context (Clavix) |
+| 1 | Product Vision (canonical) | `.ops/product-vision-strategy.md` | Full vision — cross-domain analysis only. Regenerate splits with `/vision:distill` |
+| 1a | Product Vision (distilled) | `.ops/quick-product-vision-strategy.md` | Product context: vision, pillars, non-goals, AI strategy (§1–§7, §12) |
+| 1b | Security/Compliance Baseline | `.ops/security-compliance-baseline.md` | Security posture, compliance, AI boundaries, tech non-goals (§10 partial, §11, §12, §15, §16) |
+| 1c | Architecture Baseline | `.ops/tech-architecture-baseline.md` | Architecture, data, integration, scalability, tech non-goals (§8–§10, §12–§16) |
 | 2 | UI Design System | `.ops/ui-design-system.md` | UI source of truth (if present) |
 | 3 | System Design | `.ops/build/system-design.yaml` | Architecture reference |
 | 4 | PRD | `.ops/build/v{x}/prd.md` | Version scope + acceptance intent |
@@ -29,7 +32,10 @@ Agents MUST consult these artifacts before coding:
 ### Folder Structure
 ```
 .ops/
-├── product-vision-strategy.md
+├── product-vision-strategy.md          (canonical — do not load unless cross-domain)
+├── quick-product-vision-strategy.md    (distilled: §1–§7, §12 — product agents)
+├── security-compliance-baseline.md     (distilled: §10 partial, §11, §12, §15, §16 — security/compliance agents)
+├── tech-architecture-baseline.md       (distilled: §8–§10, §12–§16 — architecture agents)
 ├── ui-design-system.md (optional)
 └── build/
     ├── decisions-log.md

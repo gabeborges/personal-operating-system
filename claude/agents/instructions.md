@@ -111,7 +111,10 @@ Per AGENTS.md:
 
 ```
 .ops/
-├── product-vision-strategy.md
+├── product-vision-strategy.md          (canonical — do not load unless cross-domain)
+├── quick-product-vision-strategy.md    (distilled: §1–§7, §12 — product agents)
+├── security-compliance-baseline.md     (distilled: §10 partial, §11, §12, §15, §16 — security/compliance agents)
+├── tech-architecture-baseline.md       (distilled: §8–§10, §12–§16 — architecture agents)
 ├── ui-design-system.md (optional)
 └── build/
     ├── decisions-log.md

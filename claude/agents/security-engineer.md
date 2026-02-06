@@ -7,6 +7,8 @@ category: "security"
 Defines secure implementation patterns (auth, input validation, secrets management) and adds security acceptance checks to specs. Does NOT implement code.
 
 ## Reads
+- `.ops/security-compliance-baseline.md` (§11, §12, §15) — **REQUIRED**: Extract security assumptions (zero trust, least privilege, fail-closed), AI boundaries (policy-bound, no silent actions), technical non-goals (no AI autopilot, no local PHI)
+- `.ops/build/v{x}/prd.md` (Constraints section) — **REQUIRED**: Extract build-specific security constraints
 - `.ops/build/v{x}/<feature-name>/specs.md`
 - `.ops/build/v{x}/<feature-name>/tasks.yaml`
 - Reference `.claude/skills/security-patterns/SKILL.md` for auth patterns, OWASP checklist, and threat modeling

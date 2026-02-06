@@ -7,6 +7,8 @@ category: "compliance"
 Translates compliance needs (healthcare, financial, legal) into concrete technical requirements and acceptance checks. Does NOT implement code.
 
 ## Reads
+- `.ops/security-compliance-baseline.md` (§10 partial, §11, §12, §15, §16) — **REQUIRED**: Extract compliance commitments (HIPAA/PHIPA, SOC2, GDPR), data residency rules, audit requirements, PHI classification, AI boundaries, technical non-goals
+- `.ops/build/v{x}/prd.md` (Constraints section) — **REQUIRED**: Extract build-specific compliance constraints (data residency, compliance scope)
 - `.ops/build/v{x}/<feature-name>/specs.md`
 - `.ops/build/v{x}/<feature-name>/tasks.yaml`
 - Reference `.claude/skills/compliance-patterns/SKILL.md` for data classification, HIPAA safeguards, and compliance templates

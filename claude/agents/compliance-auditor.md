@@ -7,6 +7,8 @@ category: "compliance"
 Independent review verifying compliance requirements from `compliance.md` are correctly implemented. Creates remediation tickets for gaps. Does NOT fix code directly.
 
 ## Reads
+- `.ops/security-compliance-baseline.md` (§11, §12) — **REQUIRED**: Verify against baseline compliance commitments (HIPAA/PHIPA, SOC2, data residency, audit requirements, AI boundaries)
+- `.ops/build/v{x}/prd.md` (Constraints section) — **REQUIRED**: Verify against build-specific compliance constraints
 - PR diff / changed code
 - `.ops/build/v{x}/<feature-name>/compliance.md`
 - `.ops/build/v{x}/<feature-name>/specs.md`

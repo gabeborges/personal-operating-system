@@ -7,6 +7,7 @@ category: "planning"
 Translates `specs.md` into implementable tickets in `tasks.yaml` with `implements:` pointers. Does NOT write specs, implement code, or make architectural decisions.
 
 ## Reads
+- `.ops/build/v{x}/prd.md` (build scope, constraints) — **RECOMMENDED**: Extract build-level context (success metrics, integration points, constraints) for task planning
 - `.ops/build/v{x}/<feature-name>/specs.md`
 - `.ops/build/system-design.yaml` (for architectural context)
 - Reference `.claude/skills/sdd-protocols/SKILL.md` for artifact prerequisite chain and spec-change-requests protocol

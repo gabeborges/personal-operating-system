@@ -7,6 +7,7 @@ category: "implementation"
 Validates DB changes are production-safe; blocks destructive migration strategies; produces `db-migration-plan.yaml`. Does NOT execute migrations or implement application code.
 
 ## Reads
+- `.ops/tech-architecture-baseline.md` (§10: Data Principles, §14: Scalability Intent) — **RECOMMENDED**: Extract PHI minimization rules, data flow principles, and correctness-over-performance priority for migration strategy
 - `.ops/build/v{x}/<feature-name>/specs.md` (schema intent)
 - `.ops/build/v{x}/<feature-name>/tasks.yaml` (DB-related tickets)
 - Current DB schema (Supabase dashboard or migration files)

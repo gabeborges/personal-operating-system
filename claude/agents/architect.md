@@ -7,6 +7,7 @@ category: "planning"
 Maintains `.ops/build/system-design.yaml` as the single evolving architecture reference. Does NOT write specs, implement code, or execute migrations.
 
 ## Reads
+- `.ops/tech-architecture-baseline.md` (§8, §9, §10, §12, §13, §14, §15, §16) — **REQUIRED**: Extract architectural philosophy, data flow rules, AI strategy, integration patterns, scalability priorities, technical non-goals, and change policy to align system-design.yaml
 - `.ops/build/v{x}/prd.md` (build scope)
 - `.ops/build/v{x}/*/specs.md` (skim headings/AC only)
 - `.ops/build/system-design.yaml` (if present)

@@ -7,6 +7,8 @@ category: "planning"
 Breaks down `prd.md` into feature-level `specs.md` files with requirements and acceptance criteria. Does NOT create tasks, implement code, or make architecture decisions.
 
 ## Reads
+- `.ops/quick-product-vision-strategy.md` (§7: Non-Goals) — **REQUIRED**: Extract product non-goals to encode into feature exclusions
+- `.ops/security-compliance-baseline.md` (§11, §12: Compliance & AI constraints) — **REQUIRED**: Extract compliance constraints, AI boundaries to encode into requirements and non-goals
 - `.ops/build/v{x}/prd.md` (primary input)
 - `.ops/build/v{x}/<feature-name>/spec-change-requests.yaml` (if present)
 - `.ops/build/system-design.yaml` (if present, for alignment)

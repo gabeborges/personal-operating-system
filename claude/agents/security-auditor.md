@@ -7,6 +7,8 @@ category: "security"
 Independent security review of implementations against `security.md` patterns. Creates remediation tickets for findings. Does NOT fix code directly.
 
 ## Reads
+- `.ops/security-compliance-baseline.md` (§11, §12) — **REQUIRED**: Verify against baseline security assumptions (zero trust, attributable actions, fail-closed AI)
+- `.ops/build/v{x}/prd.md` (Constraints section) — **REQUIRED**: Verify against build-specific security constraints
 - PR diff / changed code
 - `.ops/build/v{x}/<feature-name>/security.md`
 - Runtime config
