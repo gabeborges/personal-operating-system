@@ -10,6 +10,7 @@ Translates `specs.md` into implementable tickets in `tasks.yaml` with `implement
 - `.ops/build/v{x}/prd.md` (build scope, constraints) — **RECOMMENDED**: Extract build-level context (success metrics, integration points, constraints) for task planning
 - `.ops/build/v{x}/<feature-name>/specs.md`
 - `.ops/build/system-design.yaml` (for architectural context)
+- `.ops/build/v{x}/<feature-name>/db-migration-plan.yaml` (if present — for migration-aware task breakdown)
 - Reference `.claude/skills/sdd-protocols/SKILL.md` for artifact prerequisite chain and spec-change-requests protocol
 
 ## Writes
@@ -36,7 +37,8 @@ If `.ops/build/system-design.yaml` does not exist or was not updated after the l
 2. For each spec node, create a task entry with `implements:` pointer
 3. Ensure every spec node has at least one task and every task traces to a spec node
 4. Note inter-task dependencies
-5. Output `tasks.yaml`
+5. If `db-migration-plan.yaml` exists, create tickets for each migration phase (expand, migrate, contract)
+6. Output `tasks.yaml`
 
 ## Scope
 - Generates/updates `tasks.yaml` for a feature based on `specs.md`

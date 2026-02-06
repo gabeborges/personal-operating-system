@@ -30,8 +30,10 @@ Enforces the SDD sequence and routes work to the correct agents. Does NOT implem
 
 ## Build-Level State Machine
 - `specs_updated` -> `system_design_updated` (architect)
-- `system_design_updated` -> `tasks_generated` (project-task-planner)
+- `system_design_updated` -> `db_migration_planned` (database-administrator, if DB changes; auto-true if no DB changes)
+- `db_migration_planned` -> `tasks_generated` (project-task-planner)
 - `specs_updated` -> `tasks_generated` is INVALID (architect must run first)
+- `specs_updated` -> `db_migration_planned` is INVALID (architect must run first)
 
 After `spec-writer` finishes specs for a build version, run `architect` to update `system-design.yaml`. If `system-design.yaml` contains non-empty `spec-change-requests.yaml`, route back to `spec-writer` for impacted features, then rerun `architect`.
 
@@ -59,7 +61,7 @@ Spawn each agent via `Task` with `subagent_type: "general-purpose"`. Build promp
 3. Instructions to read artifacts, perform the role, return summary
 
 Spawn **tier by tier** -- wait for all agents in a tier to complete before advancing:
-T1: context-manager -> T2: project-task-planner (if needed) -> T3: parallel optionals -> T4: parallel optionals -> T5: fullstack-developer + test-automator -> T6: qa + reviewers
+T1: context-manager -> T2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner -> T3: parallel optionals -> T4: frontend-designer (if detected) -> T5: fullstack-developer + test-automator -> T6: qa + reviewers
 
 Use parallel `Task` calls for agents within the same tier.
 
@@ -68,6 +70,7 @@ Before advancing tiers:
 1. Verify all current-tier tasks are `completed`
 2. Check for `spec-change-requests.yaml` -- if found, HALT and notify user
 3. Gate agents write to `.ops/build/v{x}/<feature-name>/checks.yaml` (merge-only sections)
+4. Before T5: if `tasks.yaml` contains DB keywords (schema, migration, table, column, etc.) AND `db-migration-plan.yaml` missing → STOP, spawn database-administrator first
 
 ### Halt Protocol
 If any teammate creates `spec-change-requests.yaml`:

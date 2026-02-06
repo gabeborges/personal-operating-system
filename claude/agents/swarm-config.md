@@ -11,12 +11,12 @@ Reference for `/orchestrate` slash command. Maps SDD agents to Task tool teammat
 | context-manager | general-purpose | 1 | Always (also triggered per-tier on: deviation, scope change, spec break, changed plan, trade-off, constraint, spec-change-request, blocked, architecture decision, migration, security finding, compliance finding) | Yes |
 | spec-writer | general-purpose | 2 | `{feature-path}/specs.md` missing OR empty OR `{feature-path}/spec-change-requests.yaml` exists | No |
 | architect | general-purpose | 2 | After spec-writer completes OR `system-design.yaml` missing/empty OR user requests system design / architecture | No |
+| database-administrator | general-purpose | 2 | Tasks/specs reference database keywords (see below); runs sequentially after architect | No |
 | project-task-planner | general-purpose | 2 | `{feature-path}/tasks.yaml` missing OR empty OR `{feature-path}/specs.md` changed since last run | No |
 | ui-designer | general-purpose | 3 | Tasks/specs reference UI keywords (see below) | No |
 | security-engineer | general-purpose | 3 | Tasks/specs reference security keywords (see below) | No |
 | compliance-engineer | general-purpose | 3 | Tasks/specs reference compliance keywords (see below) | No |
 | frontend-designer | general-purpose | 4 | ui-designer was spawned | No |
-| database-administrator | general-purpose | 4 | Tasks/specs reference database keywords (see below) | No |
 | fullstack-developer | general-purpose | 5 | Always | No |
 | test-automator | general-purpose | 5 | Always | No |
 | qa | general-purpose | 6 | Always | No |
@@ -32,18 +32,18 @@ Reference for `/orchestrate` slash command. Maps SDD agents to Task tool teammat
 ```
 Tier 1: context-manager  (persistent)
    |
-Tier 2: spec-writer → architect → project-task-planner  (sequential, not parallel)
+Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential, not parallel)
    |
 Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
    |
-Tier 4: frontend-designer, database-administrator  (parallel, if detected)
+Tier 4: frontend-designer  (if detected)
    |
 Tier 5: fullstack-developer, test-automator  (parallel)
    |
 Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (parallel)
 ```
 
-Tier 2 is **sequential**: spec-writer must complete before architect runs, architect must complete before project-task-planner runs. If `spec-change-requests.yaml` appears after architect, rerun spec-writer for impacted features, then rerun architect before proceeding.
+Tier 2 is **sequential**: spec-writer must complete before architect runs, architect must complete before database-administrator runs (if needed), database-administrator must complete before project-task-planner runs. If `spec-change-requests.yaml` appears after architect, rerun spec-writer for impacted features, then rerun architect before proceeding.
 
 ## Auto-Detection Keywords
 
@@ -78,6 +78,7 @@ Read the following artifacts before starting:
 2. {feature-path}/specs.md — feature requirements
 3. .ops/build/system-design.yaml — architecture reference
 4. {feature-path}/tasks.yaml — feature tickets (if present)
+5. {feature-path}/db-migration-plan.yaml — DB migration plan (if feature involves DB changes)
 
 Perform your role using these artifacts.
 Write your outputs to the feature workspace as specified in your role definition.

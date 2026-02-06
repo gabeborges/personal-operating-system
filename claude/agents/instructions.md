@@ -11,7 +11,7 @@ Deterministic, artifact-driven SDD workflow:
 - `context-manager` is the sole writer to `decisions-log.md` and `implementation-status.md` — records decisions, state changes, and deviations. No other agent writes to these files.
 - All `implements:` pointers in `.ops/build/v{x}/<feature-name>/tasks.yaml` must reference nodes defined in `.ops/build/v{x}/<feature-name>/specs.md`. Example: `implements: /paths/users/get`
 
-Canonical flow: spec → system design → tasks → safe execution → validation → gated release → logged state → spec feedback if needed.
+Canonical flow: spec → system design → db migration planning (if DB changes) → tasks → safe execution → validation → gated release → logged state → spec feedback if needed.
 
 ### Definitions
 - `specs.md` = feature requirements + acceptance criteria in `.ops/build/v{x}/<feature-name>/specs.md`
@@ -21,12 +21,13 @@ Canonical flow: spec → system design → tasks → safe execution → validati
 
 ### SDD Artifact Flow (Prerequisite Rules)
 
-Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) → `tasks.yaml` (project-task-planner)
+Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) → `db-migration-plan.yaml` (database-administrator, if DB changes) → `tasks.yaml` (project-task-planner)
 
 | Artifact | Prerequisite | On Violation |
 |---|---|---|
 | `specs.md` | `prd.md` must exist for that version | STOP — ask user |
 | `system-design.yaml` | `specs.md` must exist for that feature | STOP — run spec-writer first |
+| `db-migration-plan.yaml` | `system-design.yaml` complete AND specs contain DB keywords | STOP — run architect first |
 | `tasks.yaml` | Both `specs.md` AND `system-design.yaml` must exist | STOP — run architect first |
 
 ---
@@ -64,11 +65,11 @@ Per AGENTS.md — 6-tier structure:
 ```
 Tier 1: workflow-orchestrator, context-manager
    |
-Tier 2: spec-writer → architect → project-task-planner  (sequential)
+Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential)
    |
 Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
    |
-Tier 4: frontend-designer, database-administrator  (parallel, if detected)
+Tier 4: frontend-designer  (if detected)
    |
 Tier 5: fullstack-developer, test-automator  (parallel)
    |
@@ -89,11 +90,11 @@ The canonical agent roster lives in **AGENTS.md**. This table adds Inputs/Output
 | context-manager | Decision log + deviation logger (sole writer) | Agent summaries, build artifacts, spec-change-requests | Maintains append-only `decisions-log.md` and `implementation-status.md` |
 | spec-writer | Spec authoring + feature breakdown | `prd.md`, product context | `specs.md` (feature requirements + acceptance criteria) |
 | architect | System design maintainer | `specs.md`, existing `system-design.yaml` | `.ops/build/system-design.yaml`; creates `spec-change-requests.yaml` if spec/architecture mismatch found |
-| project-task-planner | Spec handoff / ticket writer | `specs.md`, `system-design.yaml`, existing `.ops/build/decisions-log.md` | `tasks.yaml` (tickets with `implements:` pointers) |
+| project-task-planner | Spec handoff / ticket writer | `specs.md`, `system-design.yaml`, `db-migration-plan.yaml` (if present), existing `.ops/build/decisions-log.md` | `tasks.yaml` (tickets with `implements:` pointers) |
 | ui-designer | UX intent + flows | `specs.md`, `tasks.yaml` scope, existing UI patterns, `.ops/ui-design-system.md` | UX flows, screens, states, accessibility notes |
 | frontend-designer | Design-to-implementation translator | UI specs, codebase components, `tasks.yaml` | Component breakdown (components/props/states) |
 | fullstack-developer | Primary builder | `tasks.yaml`, `specs.md`, UI specs, `db-migration-plan.yaml` (if any), repo code | Code changes + tests |
-| database-administrator | Migration strategist / safety gate | `specs.md` schema intent, current DB schema, `tasks.yaml` | `db-migration-plan.yaml` (expand/contract/backfill/rollback) |
+| database-administrator | Migration strategist / safety gate | `specs.md` schema intent, `system-design.yaml` (`data.entities`, `data.key_constraints`), current DB schema | `db-migration-plan.yaml` (expand/contract/backfill/rollback) |
 | qa | Contract validation + exploratory | `specs.md` (`implements:` pointers), `tasks.yaml`, running app/test outputs | Validation results; may open issues in `tasks.yaml` |
 | test-automator | Automated test implementer | `specs.md`, `tasks.yaml`, repo test setup | Test files + fixtures |
 | debugger | Root-cause investigator | Failing test logs, QA repro steps, recent diffs | Fix tickets in `tasks.yaml` |

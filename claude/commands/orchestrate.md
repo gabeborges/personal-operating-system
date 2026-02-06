@@ -16,6 +16,7 @@ Enforce before any agent runs:
 |---|---|---|
 | `specs.md` | `prd.md` must exist for that version | STOP — ask user |
 | `system-design.yaml` | `specs.md` must exist for that feature | STOP — run spec-writer first |
+| `db-migration-plan.yaml` | `system-design.yaml` complete AND specs contain DB keywords | STOP — run architect first |
 | `tasks.yaml` | Both `specs.md` AND `system-design.yaml` must exist | STOP — run architect first |
 
 Violation of any prerequisite is an ERROR. Do not proceed.
@@ -50,7 +51,7 @@ Scan specs and tasks for keywords:
 | `ui`, `screen`, `flow`, `component`, `view`, `page`, `layout`, `modal`, `form`, `button`, `navigation`, `responsive`, `wireframe` | ui-designer (T3), frontend-designer (T4) |
 | `auth`, `secret`, `token`, `credential`, `oauth`, `jwt`, `session`, `permission`, `rbac`, `acl`, `encryption`, `api key`, `password`, `mfa`, `2fa` | security-engineer (T3), security-auditor (T6) |
 | `phi`, `pii`, `hipaa`, `pipeda`, `compliance`, `audit trail`, `data retention`, `baa`, `encryption at rest`, `de-identification`, `access log`, `consent`, `gdpr` | compliance-engineer (T3), compliance-auditor (T6) |
-| `schema`, `migration`, `table`, `column`, `index`, `database`, `db`, `foreign key`, `sql`, `relation`, `constraint`, `seed`, `backfill` | database-administrator (T4) |
+| `schema`, `migration`, `table`, `column`, `index`, `database`, `db`, `foreign key`, `sql`, `relation`, `constraint`, `seed`, `backfill` | database-administrator (T2, sequential after architect) |
 
 **UI system pre-step (when UI detected):**
 - Check for `.ops/ui-design-system.md`
@@ -79,9 +80,9 @@ Spawn each agent via `Task` tool as `general-purpose` subagent. Build prompt fro
 **Tier execution order** (wait for each tier to complete before advancing):
 
 - **Tier 1**: `context-manager`, `knowledge-synthesizer` — read existing artifacts, build context and decision log
-- **Tier 2** (if needed): `spec-writer` then `architect` then `project-task-planner` — **sequential, not parallel**. If `spec-change-requests.yaml` appears after `architect`, rerun `spec-writer` for impacted features, then rerun `architect` before proceeding.
+- **Tier 2** (if needed): `spec-writer` then `architect` then `database-administrator` (if DB keywords detected) then `project-task-planner` — **sequential, not parallel**. T2 sequence: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner. If `spec-change-requests.yaml` appears after `architect`, rerun `spec-writer` for impacted features, then rerun `architect` before proceeding.
 - **Tier 3** (if detected): `ui-designer`, `security-engineer`, `compliance-engineer` — parallel
-- **Tier 4** (if detected): `frontend-designer`, `database-administrator` — parallel
+- **Tier 4** (if detected): `frontend-designer` — parallel
 - **Tier 5**: `fullstack-developer`, `test-automator` — parallel
 - **Tier 6**: `qa`, `debugger`, `code-reviewer`, `security-auditor` (if T3 security), `compliance-auditor` (if T3 compliance) — parallel
 
@@ -92,6 +93,12 @@ Before advancing tiers:
 - Check for `$ARGUMENTS/spec-change-requests.yaml` — if found, **HALT** (see step 6)
 - If deviation/spec break detected, run `knowledge-synthesizer` to update build logs
 - Update task statuses via `TaskUpdate`
+
+**Gate: Before T2 project-task-planner:**
+- If `system-design.yaml` missing → STOP, output: "Cannot create tasks.yaml — system-design.yaml prerequisite missing"
+
+**Gate: Before T5 (implementation):**
+- If `tasks.yaml` contains DB keywords (schema, migration, table, column, etc.) AND `$ARGUMENTS/db-migration-plan.yaml` missing → STOP, output: "DB changes detected in tasks but no migration plan — spawn database-administrator first"
 
 ### 6. Halt Protocol
 

@@ -46,13 +46,14 @@ Agents MUST consult these artifacts before coding:
         └── <feature-name>/
             ├── specs.md
             ├── tasks.yaml
-            └── (optional) checks.yaml, db-migration-plan.yaml, spec-change-requests.yaml
+            ├── db-migration-plan.yaml (conditional — required if DB changes detected)
+            └── (optional) checks.yaml, spec-change-requests.yaml
 ```
 
 ## Workflow Discipline
 
 ### SDD Artifact Flow
-Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) → `tasks.yaml` (project-task-planner)
+Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) → `db-migration-plan.yaml` (database-administrator, if DB changes) → `tasks.yaml` (project-task-planner)
 
 **Prerequisite rules (stop conditions):**
 
@@ -60,6 +61,7 @@ Canonical order: `specs.md` (spec-writer) → `system-design.yaml` (architect) �
 |---|---|---|
 | `specs.md` | `prd.md` must exist for that version | STOP — ask user |
 | `system-design.yaml` | `specs.md` must exist for that feature | STOP — run spec-writer first |
+| `db-migration-plan.yaml` | `system-design.yaml` complete AND specs contain DB keywords | STOP — run architect first |
 | `tasks.yaml` | Both `specs.md` AND `system-design.yaml` must exist | STOP — run architect first |
 
 ### Spec vs Implementation
@@ -106,11 +108,11 @@ When finishing work, report:
 | Context Manager | Decision log + deviation logger (sole writer) | orchestration | `.claude/agents/context-manager.md` |
 | Spec Writer | Spec authoring + feature breakdown | planning | `.claude/agents/spec-writer.md` |
 | Architect | System design maintainer | planning | `.claude/agents/architect.md` |
+| Database Administrator | Migration strategist / safety gate | planning | `.claude/agents/database-administrator.md` |
 | Project Task Planner | Spec handoff / ticket writer | planning | `.claude/agents/project-task-planner.md` |
 | UI Designer | UX intent + flows | design | `.claude/agents/ui-designer.md` |
 | Frontend Designer | Design-to-implementation translator | design | `.claude/agents/frontend-designer.md` |
 | Fullstack Developer | Primary builder | implementation | `.claude/agents/fullstack-developer.md` |
-| Database Administrator | Migration strategist / safety gate | implementation | `.claude/agents/database-administrator.md` |
 | QA | Contract validation + exploratory | quality | `.claude/agents/qa.md` |
 | Test Automator | Automated test implementer | quality | `.claude/agents/test-automator.md` |
 | Debugger | Root-cause investigator | quality | `.claude/agents/debugger.md` |
@@ -129,6 +131,7 @@ When finishing work, report:
 ### Planning
 - **Spec Writer** — Spec authoring + feature breakdown
 - **Architect** — Maintains `system-design.yaml` from specs; identifies spec/architecture mismatches
+- **Database Administrator** — DB change guardian, expand/contract migration plans (runs after architect, before task planner)
 - **Project Task Planner** — Parses specs into feature `tasks.yaml` with `implements:` pointers
 
 ### Design
@@ -137,7 +140,6 @@ When finishing work, report:
 
 ### Implementation
 - **Fullstack Developer** — Primary code writer, implements feature `tasks.yaml` with tests
-- **Database Administrator** — DB change guardian, expand/contract migration plans
 
 ### Quality
 - **QA** — Contract validation against `specs.md` scenarios
@@ -156,15 +158,15 @@ When finishing work, report:
 ```
 Tier 1: workflow-orchestrator, context-manager
    ↓
-Tier 2: spec-writer → architect → project-task-planner
+Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential)
    ↓
-Tier 3: ui-designer, security-engineer, compliance-engineer
+Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
    ↓
-Tier 4: frontend-designer, database-administrator
+Tier 4: frontend-designer  (if detected)
    ↓
-Tier 5: fullstack-developer, test-automator
+Tier 5: fullstack-developer, test-automator  (parallel)
    ↓
-Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor
+Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (parallel)
 ```
 
 ## Agent Selection Guide
@@ -188,6 +190,19 @@ Tier 6: qa, debugger, code-reviewer, security-auditor, compliance-auditor
 | Spec can't be implemented as-is | workflow-orchestrator (creates spec-change-request) |
 
 **UI system rule:** Before any UI work, check for `.ops/ui-design-system.md`. If missing, run `/interface-design:init`. If present, `ui-designer` and `frontend-designer` MUST follow it. Use `frontend-design` skill for simple one-off pages/components.
+
+## Spec Change Request Resolution Workflow
+
+When any agent creates `spec-change-requests.yaml`:
+
+1. **Halt**: Workflow-orchestrator stops tier progression immediately
+2. **Review**: Human or spec-writer reviews the requests in `spec-change-requests.yaml`
+3. **Update specs**: `specs.md` is updated to resolve the conflicts
+4. **Regenerate downstream artifacts**: Affected downstream artifacts are regenerated in order:
+   - `system-design.yaml` (architect reruns if spec changes affect architecture)
+   - `db-migration-plan.yaml` (database-administrator reruns if spec changes affect schema)
+   - `tasks.yaml` (project-task-planner reruns to reflect updated specs/design)
+5. **Resume**: Workflow resumes from the first affected tier
 
 ## Swarm Orchestration
 

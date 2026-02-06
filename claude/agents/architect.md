@@ -38,8 +38,8 @@ architecture:
   components: []
   integrations: []
   data:
-    entities: []
-    key_constraints: []
+    entities: []      # consumed by database-administrator for migration planning
+    key_constraints: [] # consumed by database-administrator for migration planning
 flows:
   - name: ""
     steps: []
