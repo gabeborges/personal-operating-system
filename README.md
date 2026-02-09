@@ -1,4 +1,4 @@
-# claude-sdd-bootstrap
+# Claude SDD agent swarm bootstrap
 
 A complete SDD (Specification-Driven Development) toolkit for AI-powered product development with Claude Code and Cursor.
 
