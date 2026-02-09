@@ -48,8 +48,8 @@ Scan specs and tasks for keywords (see `.claude/agents/swarm-config.md` for keyw
 | Keywords detected | Agents to spawn |
 |---|---|
 | UI keywords | ui-designer (T3) |
-| Security keywords | security-engineer (T3), security-auditor (T5) |
-| Compliance keywords | compliance-engineer (T3), compliance-auditor (T5) |
+| Security keywords | security-agent Phase 1 (T3), security-agent Phase 2 (T5) |
+| Compliance keywords | compliance-agent Phase 1 (T3), compliance-agent Phase 2 (T5) |
 | Database keywords | database-administrator (T2, sequential after architect) |
 
 **UI system pre-step (when UI detected):**
@@ -79,9 +79,9 @@ Build each agent's prompt from the Teammate Prompt Template in `.claude/agents/s
 
 - **Tier 1**: `context-manager` (lazy — only if trigger keywords detected or at build completion)
 - **Tier 2** (if in mode): Apply T2 freshness checks — skip agents whose artifacts are current. Sequential: spec-writer → architect → database-administrator (if DB) → project-task-planner
-- **Tier 3** (if in mode): `ui-designer`, `security-engineer`, `compliance-engineer` — parallel, if detected
+- **Tier 3** (if in mode): `ui-designer`, `security-agent` (Phase 1), `compliance-agent` (Phase 1) — parallel, if detected
 - **Tier 4** (if in mode): `fullstack-developer`, `test-automator` — parallel
-- **Tier 5** (if in mode): `qa`, `debugger`, `code-reviewer`, `security-auditor`, `compliance-auditor` — parallel
+- **Tier 5** (if in mode): `qa`, `debugger`, `code-reviewer`, `security-agent` (Phase 2), `compliance-agent` (Phase 2) — parallel
 
 Use parallel `Task` calls for agents within the same tier.
 

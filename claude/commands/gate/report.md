@@ -36,13 +36,13 @@ Based on `.claude/skills/sdd-protocols/SKILL.md`, `checks.yaml` has these sectio
 |---------|-----------|--------|
 | `db_migration` | database-administrator | `status`, `blockers`, `notes` |
 | `ui_design` | ui-designer | `status`, `blockers`, `notes` |
-| `security_review` | security-engineer | `status`, `blockers`, `notes` |
-| `compliance_review` | compliance-engineer | `status`, `blockers`, `notes` |
+| `security_review` | security-agent (Phase 1) | `status`, `blockers`, `notes` |
+| `compliance_review` | compliance-agent (Phase 1) | `status`, `blockers`, `notes` |
 | `qa_validation` | qa | `status`, `blockers`, `notes`, `evidence` |
 | `testing` | test-automator | `status`, `blockers`, `notes`, `evidence` |
 | `code_review` | code-reviewer | `status`, `blockers`, `notes`, `evidence` |
-| `security_audit` | security-auditor | `status`, `blockers`, `notes`, `evidence` |
-| `compliance_audit` | compliance-auditor | `status`, `blockers`, `notes`, `evidence` |
+| `security_audit` | security-agent (Phase 2) | `status`, `blockers`, `notes`, `evidence` |
+| `compliance_audit` | compliance-agent (Phase 2) | `status`, `blockers`, `notes`, `evidence` |
 
 **Status values**: `pass` | `fail`
 
@@ -246,7 +246,7 @@ In addition to `checks.yaml` sections, aggregate status from these sources:
 1. **QA Validation** (qa)
    - Pagination: nextCursor is null instead of absent (T-004 created)
 
-2. **Security Audit** (security-auditor)
+2. **Security Audit** (security-agent Phase 2)
    - SEV-2: Missing input length validation on user.name (src/routes/users.ts:23)
 
 ---
@@ -260,7 +260,7 @@ In addition to `checks.yaml` sections, aggregate status from these sources:
 **What's Needed**:
 1. Fix blocker: T-004 (QA validation — pagination response)
 2. Fix blocker: SEV-2 input validation (Security audit — user.name validation)
-3. Re-run qa and security-auditor agents to verify fixes
+3. Re-run qa and security-agent (Phase 2) to verify fixes
 4. Once all gates pass, feature is merge ready
 
 ---

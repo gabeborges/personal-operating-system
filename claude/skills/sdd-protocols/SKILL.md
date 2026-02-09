@@ -43,7 +43,7 @@ Formal mechanism to escalate spec gaps, ambiguities, or conflicts discovered dur
 - **Ambiguous or missing information** prevents correct acceptance criteria (spec-writer)
 - **Architecture conflicts with spec** — design patterns required differ from spec assumptions (architect)
 - **Implementation reveals spec gap** — code review or QA finds spec divergence (code-reviewer, qa)
-- **Security/compliance gap** — required controls not defined in spec (security-auditor, compliance-auditor)
+- **Security/compliance gap** — required controls not defined in spec (security-agent, compliance-agent)
 - **Test requirements conflict with spec** (test-automator)
 
 ### Who Creates
@@ -51,8 +51,8 @@ Formal mechanism to escalate spec gaps, ambiguities, or conflicts discovered dur
 - architect (system-design conflicts)
 - qa (contract/scenario mismatch)
 - code-reviewer (PR divergence from spec)
-- security-auditor (missing security requirements)
-- compliance-auditor (missing compliance requirements)
+- security-agent (missing security requirements)
+- compliance-agent (missing compliance requirements)
 - test-automator (acceptance criteria ambiguity)
 - database-administrator (schema change breaks existing queries)
 
@@ -197,7 +197,7 @@ code_review:
 ---
 
 #### security_audit
-**Written by**: security-auditor
+**Written by**: security-agent (Phase 2)
 
 ```yaml
 security_audit:
@@ -232,7 +232,7 @@ SEV-1|SEV-2|SEV-3: {finding title}
 ---
 
 #### compliance_audit
-**Written by**: compliance-auditor
+**Written by**: compliance-agent (Phase 2)
 
 ```yaml
 compliance_audit:
@@ -369,8 +369,8 @@ In `tasks.yaml`:
 
 ### When to Create
 - qa: contract mismatch, scenario failure
-- security-auditor: vulnerability found
-- compliance-auditor: compliance gap found
+- security-agent: vulnerability found
+- compliance-agent: compliance gap found
 - code-reviewer: PR requires changes before merge
 - debugger: root cause identified
 
@@ -412,10 +412,10 @@ In `tasks.yaml`:
 2. architect → `system-design.yaml`
 3. database-administrator → `db-migration-plan.yaml` (build-level, conditional)
 4. project-task-planner → `tasks.yaml`
-5. Conditional agents (ui-designer, security-engineer, compliance-engineer)
+5. Conditional agents (ui-designer, security-agent Phase 1, compliance-agent Phase 1)
 6. workflow-orchestrator → `build-order.yaml` (cross-feature, conditional)
 7. fullstack-developer + test-automator → code + tests
-8. qa + code-reviewer + security-auditor + compliance-auditor → `checks.yaml`
+8. qa + code-reviewer + security-agent (Phase 2) + compliance-agent (Phase 2) → `checks.yaml`
 
 ### Stop Signals
 - `spec-change-requests.yaml` exists with `status: open`

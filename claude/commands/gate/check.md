@@ -36,9 +36,9 @@ Based on `.claude/skills/sdd-protocols/SKILL.md`:
 |------|-------------------|----------|
 | **Tier 1** | None (context-manager, lazy) | context-manager |
 | **Tier 2** | `prd.md`, `specs.md`, `system-design.yaml`, `tasks.yaml` | spec-writer → architect → database-administrator → project-task-planner |
-| **Tier 3** | All Tier 2 artifacts | ui-designer, security-engineer, compliance-engineer |
+| **Tier 3** | All Tier 2 artifacts | ui-designer, security-agent (Phase 1), compliance-agent (Phase 1) |
 | **Tier 4** | All Tier 2 artifacts + Tier 3 outputs (if applicable) | fullstack-developer, test-automator |
-| **Tier 5** | All Tier 2-4 artifacts + implementation complete | qa, debugger, code-reviewer, security-auditor, compliance-auditor |
+| **Tier 5** | All Tier 2-4 artifacts + implementation complete | qa, debugger, code-reviewer, security-agent (Phase 2), compliance-agent (Phase 2) |
 
 ---
 
@@ -149,7 +149,7 @@ Based on artifact presence:
 **Tier 3 Ready** (Optional design agents)
 - All Tier 2 artifacts exist
 - `specs.md`, `system-design.yaml`, `tasks.yaml` all present
-- Ready for: ui-designer, security-engineer, compliance-engineer
+- Ready for: ui-designer, security-agent (Phase 1), compliance-agent (Phase 1)
 - Auto-detection: scan `specs.md` and `tasks.yaml` for keywords (see swarm-config.md)
 
 **Tier 4 Ready** (Implementation)
@@ -166,7 +166,7 @@ Based on artifact presence:
 **Tier 5 Ready** (Validation gates)
 - All Tier 2-4 artifacts exist
 - Implementation tasks marked complete
-- Ready for: qa, code-reviewer, security-auditor, compliance-auditor
+- Ready for: qa, code-reviewer, security-agent (Phase 2), compliance-agent (Phase 2)
 
 **Merge Ready**
 - All Tier 5 gates pass (`checks.yaml` all `status: pass`)
@@ -237,7 +237,7 @@ Based on artifact presence:
 
 **Recommendation:**
 1. Resolve blockers: T-004, T-010
-2. Re-run security-auditor and qa agents
+2. Re-run security-agent (Phase 2) and qa agents
 3. Once all gates pass, proceed to Tier 5
 
 ---

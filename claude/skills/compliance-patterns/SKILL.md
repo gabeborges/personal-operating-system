@@ -11,7 +11,7 @@ Systematic approach to translating compliance requirements (HIPAA, GDPR, SOC2, f
 
 **Use for:** Healthcare data (HIPAA), personal data (GDPR), financial data, audit requirements, data retention policies
 
-**Not for:** General security (see security-engineer), code implementation (see developer)
+**Not for:** General security (see security-agent), code implementation (see developer)
 
 ---
 

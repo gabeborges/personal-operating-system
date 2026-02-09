@@ -14,15 +14,15 @@ Reference for `/orchestrate` slash commands. Maps SDD agents to Task tool teamma
 | database-administrator | general-purpose | 2 | Tasks/specs reference database keywords (see below); runs sequentially after architect | No |
 | project-task-planner | general-purpose | 2 | `{feature-path}/tasks.yaml` missing OR empty OR `{feature-path}/specs.md` changed since last run | No |
 | ui-designer | general-purpose | 3 | Tasks/specs reference UI keywords (see below) | No |
-| security-engineer | general-purpose | 3 | Tasks/specs reference security keywords (see below) | No |
-| compliance-engineer | general-purpose | 3 | Tasks/specs reference compliance keywords (see below) | No |
+| security-agent (Phase 1) | general-purpose | 3 | Tasks/specs reference security keywords (see below) | No |
+| compliance-agent (Phase 1) | general-purpose | 3 | Tasks/specs reference compliance keywords (see below) | No |
 | fullstack-developer | general-purpose | 4 | Always | No |
 | test-automator | general-purpose | 4 | Always | No |
 | qa | general-purpose | 5 | Always | No |
 | debugger | general-purpose | 5 | QA opens fix tickets | No |
 | code-reviewer | general-purpose | 5 | Always | No |
-| security-auditor | general-purpose | 5 | security-engineer was spawned | No |
-| compliance-auditor | general-purpose | 5 | compliance-engineer was spawned | No |
+| security-agent (Phase 2) | general-purpose | 5 | security-agent Phase 1 was spawned | No |
+| compliance-agent (Phase 2) | general-purpose | 5 | compliance-agent Phase 1 was spawned | No |
 
 **Always spawn**: fullstack-developer (T4), test-automator (T4), qa (T5), code-reviewer (T5).
 
@@ -33,11 +33,11 @@ Tier 1: context-manager  (lazy — invoked on triggers or at end)
    |
 Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential, not parallel)
    |
-Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
+Tier 3: ui-designer, security-agent (Phase 1), compliance-agent (Phase 1)  (parallel, if detected)
    |
 Tier 4: fullstack-developer, test-automator  (parallel)
    |
-Tier 5: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (parallel)
+Tier 5: qa, debugger, code-reviewer, security-agent (Phase 2), compliance-agent (Phase 2)  (parallel)
 ```
 
 Tier 2 is **sequential**: spec-writer must complete before architect runs, architect must complete before database-administrator runs (if needed), database-administrator must complete before project-task-planner runs. If `spec-change-requests.yaml` appears after architect, rerun spec-writer for impacted features, then rerun architect before proceeding.
@@ -82,10 +82,10 @@ Scan `specs.md` and `tasks.yaml` content for these keywords:
 ### UI agent (ui-designer)
 `ui`, `screen`, `flow`, `component`, `view`, `page`, `layout`, `modal`, `form`, `button`, `navigation`, `responsive`, `wireframe`
 
-### Security agents (security-engineer -> security-auditor)
+### Security agent (security-agent Phase 1 → Phase 2)
 `auth`, `secret`, `token`, `credential`, `oauth`, `jwt`, `session`, `permission`, `rbac`, `acl`, `encryption`, `api key`, `password`, `mfa`, `2fa`
 
-### Compliance agents (compliance-engineer -> compliance-auditor)
+### Compliance agent (compliance-agent Phase 1 → Phase 2)
 `phi`, `pii`, `hipaa`, `phipaa`, `pipeda`, `compliance`, `audit trail`, `data retention`, `baa`, `encryption at rest`, `de-identification`, `access log`, `consent`, `gdpr`
 
 ### Database agent (database-administrator)

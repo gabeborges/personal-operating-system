@@ -80,11 +80,11 @@ Tier 1: context-manager  (lazy — invoked on triggers or at end)
    |
 Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential)
    |
-Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
+Tier 3: ui-designer, security-agent (Phase 1), compliance-agent (Phase 1)  (parallel, if detected)
    |
 Tier 4: fullstack-developer, test-automator  (parallel)
    |
-Tier 5: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (parallel)
+Tier 5: qa, debugger, code-reviewer, security-agent (Phase 2), compliance-agent (Phase 2)  (parallel)
 ```
 
 **Always spawn**: fullstack-developer (T4), test-automator (T4), qa (T5), code-reviewer (T5).
@@ -109,10 +109,8 @@ The canonical agent roster lives in **AGENTS.md**. This table adds Inputs/Output
 | test-automator | Automated test implementer | `specs.md`, `tasks.yaml`, repo test setup | Test files + fixtures |
 | debugger | Root-cause investigator | Failing test logs, QA repro steps, recent diffs | Fix tickets in `tasks.yaml` |
 | code-reviewer | Quality gate | PR diff, `tasks.yaml`, `specs.md` | Review notes; may add required-fix tasks to `tasks.yaml` |
-| security-engineer | Secure-by-design implementer | `tasks.yaml`, auth model, infra context | `.ops/build/v{x}/<feature>/security.yaml`; updates `specs.md` with security checks |
-| security-auditor | Independent security reviewer | PR diff, runtime config, dependency list | Findings list; remediation tasks in `tasks.yaml` |
-| compliance-engineer | Compliance-by-design | `tasks.yaml`, `specs.md`, data flows/PHI assumptions | `.ops/build/v{x}/<feature>/compliance.yaml`; updates `specs.md` with compliance checks |
-| compliance-auditor | Independent compliance reviewer | PR diff, logs/audit trails, data handling | Findings list; remediation tasks in `tasks.yaml` |
+| security-agent | Security patterns (Phase 1) + audit (Phase 2) | `tasks.yaml`, `specs.md`, auth model, PR diff, dependencies | Phase 1: `security.yaml`, updates `specs.md`; Phase 2: remediation tasks, `checks.yaml` security_audit |
+| compliance-agent | Compliance requirements (Phase 1) + audit (Phase 2) | `tasks.yaml`, `specs.md`, data flows, PR diff | Phase 1: `compliance.yaml`, updates `specs.md`; Phase 2: remediation tasks, `checks.yaml` compliance_audit |
 
 ---
 

@@ -133,12 +133,8 @@ When finishing work, report:
 | Test Automator | Automated test implementer | quality | `.claude/agents/test-automator.md` |
 | Debugger | Root-cause investigator | quality | `.claude/agents/debugger.md` |
 | Code Reviewer | Quality gate | quality | `.claude/agents/code-reviewer.md` |
-| Security Engineer | Secure-by-design implementer | security | `.claude/agents/security-engineer.md` |
-| Security Auditor | Independent security reviewer | security | `.claude/agents/security-auditor.md` |
-| Compliance Engineer | Compliance-by-design | compliance | `.claude/agents/compliance-engineer.md` |
-| Compliance Auditor | Compliance reviewer | compliance | `.claude/agents/compliance-auditor.md` |
-| SDD Specialist | SDD workflow config creator/auditor | meta | `.claude/agents/sdd-specialist.md` |
-| Claude Code Specialist | CLAUDE.md/AGENTS.md/agent/skill optimizer | meta | `.claude/agents/claude-code-specialist.md` |
+| Security Agent | Security patterns (Phase 1) + audit (Phase 2) | security | `.claude/agents/security-agent.md` |
+| Compliance Agent | Compliance requirements (Phase 1) + audit (Phase 2) | compliance | `.claude/agents/compliance-agent.md` |
 
 ## By Category
 
@@ -165,14 +161,11 @@ When finishing work, report:
 - **Code Reviewer** — PR quality gate, spec compliance verification
 
 ### Security & Compliance
-- **Security Engineer** — Defines secure-by-design patterns
-- **Security Auditor** — Independent security review, OWASP checks
-- **Compliance Engineer** — Translates compliance needs into technical requirements
-- **Compliance Auditor** — Independent compliance verification
+- **Security Agent** — Defines secure-by-design patterns (Phase 1, T3) and audits implementation against them (Phase 2, T5)
+- **Compliance Agent** — Translates compliance needs into technical requirements (Phase 1, T3) and audits implementation (Phase 2, T5)
 
-### Meta (User-Invoked Only)
-- **SDD Specialist** — Creates and audits SDD workflow configuration files (agent definitions, instructions.md, AGENTS.md, swarm-config.md, skills). Not part of automated swarm.
-- **Claude Code Specialist** — Creates and optimizes CLAUDE.md, AGENTS.md, agent files, and skills. Not part of automated swarm.
+### Meta (User-Invoked Skills)
+- **`/sdd:*` skill group** — Creates and audits SDD workflow configuration files, CLAUDE.md, AGENTS.md, agent files, and skills. Invoked directly by users, not part of automated swarm. See `.claude/commands/sdd/` for available commands.
 
 ## Dependency DAG
 
@@ -181,11 +174,11 @@ Tier 1: context-manager  (lazy — invoked on triggers or at end)
    ↓
 Tier 2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner  (sequential)
    ↓
-Tier 3: ui-designer, security-engineer, compliance-engineer  (parallel, if detected)
+Tier 3: ui-designer, security-agent (Phase 1), compliance-agent (Phase 1)  (parallel, if detected)
    ↓
 Tier 4: fullstack-developer, test-automator  (parallel)
    ↓
-Tier 5: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (parallel)
+Tier 5: qa, debugger, code-reviewer, security-agent (Phase 2), compliance-agent (Phase 2)  (parallel)
 ```
 
 ## Agent Selection Guide
@@ -203,8 +196,8 @@ Tier 5: qa, debugger, code-reviewer, security-auditor, compliance-auditor  (para
 | Implementation done, need validation | qa + test-automator |
 | Tests failing | debugger |
 | PR ready for review | code-reviewer |
-| Security-sensitive feature | security-engineer → security-auditor |
-| Compliance-sensitive feature | compliance-engineer → compliance-auditor |
+| Security-sensitive feature | security-agent (Phase 1 → Phase 2) |
+| Compliance-sensitive feature | compliance-agent (Phase 1 → Phase 2) |
 | Need to record a decision | context-manager |
 | Spec can't be implemented as-is | workflow-orchestrator (creates spec-change-request) |
 

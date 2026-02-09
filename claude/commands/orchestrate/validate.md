@@ -32,8 +32,8 @@ Pre-load `specs.md` and `tasks.yaml` content for the teammate prompt template (i
 - `qa` — always
 - `code-reviewer` — always
 - `debugger` — if QA finds issues
-- `security-auditor` — if specs/tasks contain security keywords
-- `compliance-auditor` — if specs/tasks contain compliance keywords
+- `security-agent` (Phase 2) — if specs/tasks contain security keywords
+- `compliance-agent` (Phase 2) — if specs/tasks contain compliance keywords
 
 Route summaries to `context-manager` at completion.
 

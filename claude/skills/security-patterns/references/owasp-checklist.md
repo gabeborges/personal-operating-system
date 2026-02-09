@@ -3,8 +3,8 @@
 Detailed security checks tailored to this stack: **Next.js (App Router), Supabase, Stripe, Google OAuth**.
 
 Use this checklist when:
-- Reviewing PRs (code-reviewer, security-auditor)
-- Designing new features (security-engineer)
+- Reviewing PRs (code-reviewer, security-agent)
+- Designing new features (security-agent)
 - Auditing existing code
 
 ---

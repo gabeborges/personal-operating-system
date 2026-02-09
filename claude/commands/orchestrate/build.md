@@ -31,8 +31,8 @@ Pre-load `specs.md` and `tasks.yaml` content for the teammate prompt template (i
 ### Tier 3: Design (parallel, if detected)
 Scan specs/tasks for keywords. Spawn as needed:
 - `ui-designer` — if UI keywords detected
-- `security-engineer` — if security keywords detected
-- `compliance-engineer` — if compliance keywords detected
+- `security-agent` (Phase 1) — if security keywords detected
+- `compliance-agent` (Phase 1) — if compliance keywords detected
 
 ### Tier 4: Implementation (parallel)
 - `fullstack-developer` — always
@@ -42,8 +42,8 @@ Scan specs/tasks for keywords. Spawn as needed:
 - `qa` — always
 - `code-reviewer` — always
 - `debugger` — if QA finds issues
-- `security-auditor` — if security-engineer was spawned
-- `compliance-auditor` — if compliance-engineer was spawned
+- `security-agent` (Phase 2) — if security-agent Phase 1 was spawned
+- `compliance-agent` (Phase 2) — if compliance-agent Phase 1 was spawned
 
 Route summaries to `context-manager` at build completion (or on trigger keywords).
 

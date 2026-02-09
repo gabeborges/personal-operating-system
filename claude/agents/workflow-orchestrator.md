@@ -108,7 +108,7 @@ Spawn each agent via `Task` with `subagent_type: "general-purpose"`. Build promp
 5. On-demand artifact list for role-specific reads
 
 Spawn **tier by tier** — wait for all agents in a tier to complete before advancing:
-T1: context-manager (lazy) -> T2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner -> T3: ui-designer, security-engineer, compliance-engineer (parallel) -> T4: fullstack-developer + test-automator -> T5: qa + reviewers + auditors
+T1: context-manager (lazy) -> T2: spec-writer → architect → database-administrator (if DB keywords) → project-task-planner -> T3: ui-designer, security-agent (Phase 1), compliance-agent (Phase 1) (parallel) -> T4: fullstack-developer + test-automator -> T5: qa + code-reviewer + debugger + security-agent (Phase 2) + compliance-agent (Phase 2)
 
 Use parallel `Task` calls for agents within the same tier.
 
